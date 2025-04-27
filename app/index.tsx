@@ -17,7 +17,13 @@ export default function LaCasitaHome() {
       const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/jwt-auth/v1/token`, {
         username: email,
         password: password,
-      });
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
       if (response.data.token) {
         setIsAuth(true);

@@ -1,5 +1,6 @@
 import { Tabs, Redirect } from "expo-router";
 import LaCasitaHeader from "@/components/LaCasitaHeader";
+import BottomNavigation from "@/components/BottomNavigation";
 
 export default function InternasLayout() {
     return (
@@ -15,6 +16,7 @@ export default function InternasLayout() {
             >
                 <Tabs.Screen name="index" redirect={false} />
             </Tabs>
+            <BottomNavigation />
         </>
     )   
 }
