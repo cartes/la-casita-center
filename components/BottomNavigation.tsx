@@ -11,11 +11,14 @@ export default function BottomNavigation() {
             <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => router.push("/home")}>
                 <Ionicons name="home-outline" size={26} color="#fff" />
             </TouchableOpacity>
-            <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => console.log("Search")}>
-                <Ionicons name="notifications-outline" size={26} color="#fff" />
+            <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => router.push("/videos")}>
+                <Ionicons name="logo-youtube" size={26} color="#fff" />
             </TouchableOpacity>
-            <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => console.log("Add")}>
-                <Ionicons name="person-outline" size={26} color="#fff" />
+            <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => router.push("/eventos")}>
+                <Ionicons name="calendar-outline" size={26} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={{ paddingTop: 20 }} onPress={() => router.push("/contacto")}>
+                <Ionicons name="call-outline" size={26} color="#fff" />
             </TouchableOpacity>
         </SafeAreaView>
     );

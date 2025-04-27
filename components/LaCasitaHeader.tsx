@@ -13,7 +13,7 @@ export default function LaCasitaHeader() {
                 <Ionicons name="menu" size={28} color="#333" />
             </TouchableOpacity>
             <Image source={require("../assets/images/logo_casita.png")} style={styles.logo} />
-            <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Ir al perfil')}>
+            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/perfil")}>
                 {userImg ? (
                     <Image source={{ uri: userImg }} style={styles.avatar} />
                 ) : (
