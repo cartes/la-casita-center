@@ -1,50 +1,83 @@
-# Welcome to your Expo app 👋
+# La Casita Center
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bienvenido al nuevo proyecto **La Casita Center**: una app desarrollada en **React Native** con **Expo SDK 52**, conectada a un backend **WordPress Headless** vía API REST.
 
-## Get started
+Este proyecto reemplaza la versión anterior con una arquitectura más moderna y segura.
 
-1. Install dependencies
+---
+
+## 🚀 Tecnologías utilizadas
+
+- **React Native** (Expo 52)
+- **Expo Router**
+- **Axios** para consumo de API
+- **Context API** para autenticación
+- **WordPress Headless CMS** como backend
+- **Push Notifications** (en preparación)
+- **Autenticación JWT**
+
+---
+
+## 🧩 Funcionalidades principales
+
+- **Autenticación de usuarios**
+  - Inicio de sesión mediante API JWT
+  - Redirección automática tras login/logout
+- **Listado de alertas**
+  - Recuperación en tiempo real de alertas desde WordPress
+  - Actualización automática al detectar cambios
+- **Navegación intuitiva**
+  - Barra de navegación inferior con íconos
+  - Menú lateral deslizable personalizado
+- **Perfil de usuario**
+  - Acceso rápido al perfil del usuario
+- **Diseño responsive**
+  - Adaptado a móviles y tablets
+  - Scroll fluido usando `FlatList`
+- **Preparado para notificaciones push**
+  - Sistema de alertas en preparación para nuevos posts
+
+---
+
+## ⚙️ Instalación
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/cartes/la-casita-center.git
+cd la-casita-center
+
+2. Instalar dependencias:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. Crear un archivo `.env` en la raíz del proyecto:
 
    ```bash
-    npx expo start
+   EXPO_PUBLIC_API_URL=https://tusitio.com/wp-json
    ```
 
-In the output, you'll find options to open the app in a
+4. Iniciar el proyecto:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   npx expo start
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🔥 Próximas mejoras
 
-## Get a fresh project
+- Integración de **notificaciones push** para nuevas alertas
+- Sección de edición de perfil
+- Modo oscuro
+- Animaciones de carga en las vistas
+- Soporte offline para alertas
 
-When you're ready, run:
+## 🤝 Contribuciones
 
-```bash
-npm run reset-project
-```
+Si quieres aportar mejoras, ¡eres bienvenido!  
+Puedes hacer un fork del proyecto, crear tu feature branch y enviar un Pull Request.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🐣 Autor
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Cristian Cartes** – [@cartes](https://github.com/cartes)
