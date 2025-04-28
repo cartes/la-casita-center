@@ -1,26 +1,142 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ImageBackground, FlatList, Image } from "react-native";
+import { useAuth } from "@/context/AuthContext";
+import { Redirect } from "expo-router";
+
+interface Videos {
+    id: number;
+    title: {
+        rendered: string;
+    };
+    content: {
+        rendered: string;
+    };
+    _embedded?: {
+        "wp:featuredmedia"?: Array<{
+            source_url: string;
+            media_details?: {
+                sizes?: {
+                    thumbnail?: {
+                        source_url: string;
+                    };
+                    medium?: {
+                        source_url: string;
+                    };
+                    full?: {
+                        source_url: string;
+                    };
+                };
+            };
+        }>;
+    };
+}
 
 export default function Videos() {
-    const router = useRouter();
+    const { isAuth } = useAuth();
+
+    if (!isAuth) {
+        return <Redirect href="/" />;
+    }
+    const [videos, setVideos] = useState<Videos[]>([]);
+
+    useEffect(() => {
+        const getVideos = async () => {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/wp/v2/posts?categories=2&_embed`, {
+                headers: {
+                    "content-type": "application/json",
+                }
+            });
+            const data = await response.json();
+            setVideos(data);
+        }
+        getVideos();
+    }, []);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Videos</Text>
+            <ImageBackground
+                source={require("../../assets/images/back_header.png")}
+                style={{ width: "105%", height: 70, justifyContent: 'center', paddingVertical: 10, paddingLeft: 20 }}
+                resizeMode="cover">
+                <Text style={styles.title}>Videos</Text>
+            </ImageBackground>
+            <View style={styles.content}>
+                <FlatList<Videos>
+                    data={videos}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => {
+                        const imageUrl = item._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.thumbnail?.source_url;
+
+                        return (
+                            <View style={styles.card}>
+                                {imageUrl && (
+                                    <Image
+                                        source={{ uri: imageUrl }}
+                                        style={styles.imageCard}
+                                    />
+                                )}
+                                <View style={{ paddingHorizontal: 10, width: "75%" }}>
+                                    <Text style={{ fontSize: 16 }}>{item.title.rendered}</Text>
+                                </View>
+                            </View>
+                        );
+                    }}
+                />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    card: {
+        width: "90%",
+        height: 100,
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#7f7f7f",
+        marginVertical: 10,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingBottom: 10,
+    },
+    imageCard: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+    },
+    content: {
         flex: 1,
-        justifyContent: "center",
+        minHeight: 1200,
+        paddingTop: 120,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+    },
+    container: {
+        flexDirection: "column",
+        width: "100%",
+        flex: 1,
+        justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: "#fff",
     },
-    text: {
-        fontSize: 24,
-        fontWeight: "bold",
+    title: {
+        fontSize: 12,
+        fontWeight: "300",
+        textTransform: "uppercase",
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: "#325aa6",
+        color: '#162d40', 
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        padding: 10,
+        flexDirection: 'column',
+        width: 120,
+        justifyContent: 'flex-end',
     }
 });
