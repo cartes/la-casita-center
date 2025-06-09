@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, FlatList, Image, TouchableOpacity } from "react-native";
 import { useAuth } from "@/context/AuthContext";
 import { Redirect } from "expo-router";
+import YouTubeModal from "@/components/YouTubeModal";
 
 interface Videos {
     id: number;
@@ -31,13 +32,21 @@ interface Videos {
     };
 }
 
+const extractYouTubeUrl = (html: string): string | null => {
+    const match = html.match(/<iframe.*?src="(.*?)"/);
+    return match ? match[1] : null;
+};
+
 export default function Videos() {
     const { isAuth } = useAuth();
 
     if (!isAuth) {
         return <Redirect href="/" />;
     }
+
     const [videos, setVideos] = useState<Videos[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null);
 
     useEffect(() => {
         const getVideos = async () => {
@@ -48,7 +57,7 @@ export default function Videos() {
             });
             const data = await response.json();
             setVideos(data);
-        }
+        };
         getVideos();
     }, []);
 
@@ -60,15 +69,25 @@ export default function Videos() {
                 resizeMode="cover">
                 <Text style={styles.title}>Videos</Text>
             </ImageBackground>
+
             <View style={styles.content}>
                 <FlatList<Videos>
                     data={videos}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => {
                         const imageUrl = item._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.thumbnail?.source_url;
+                        const videoUrl = extractYouTubeUrl(item.content.rendered);
 
                         return (
-                            <View style={styles.card}>
+                            <TouchableOpacity
+                                style={styles.card}
+                                onPress={() => {
+                                    if (videoUrl) {
+                                        setCurrentVideoUrl(videoUrl);
+                                        setModalVisible(true);
+                                    }
+                                }}
+                            >
                                 {imageUrl && (
                                     <Image
                                         source={{ uri: imageUrl }}
@@ -78,11 +97,17 @@ export default function Videos() {
                                 <View style={{ paddingHorizontal: 10, width: "75%" }}>
                                     <Text style={{ fontSize: 16 }}>{item.title.rendered}</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         );
                     }}
                 />
             </View>
+
+            <YouTubeModal
+                visible={modalVisible}
+                videoUrl={currentVideoUrl}
+                onClose={() => setModalVisible(false)}
+            />
         </View>
     );
 }
@@ -131,7 +156,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         borderColor: "#325aa6",
-        color: '#162d40', 
+        color: '#162d40',
         textAlign: 'center',
         backgroundColor: '#fff',
         padding: 10,

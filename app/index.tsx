@@ -4,6 +4,8 @@ import React, { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Alert } from "react-native";
 import { useAuth } from "@/context/AuthContext";
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
 
 export default function LaCasitaHome() {
   // Aquí puedes agregar la lógica para manejar el estado de autenticación
@@ -33,7 +35,7 @@ export default function LaCasitaHome() {
       }
 
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error en el acceso en:", error);
       Alert.alert("Ingreso a fallado", "Error de red");
     }
 
