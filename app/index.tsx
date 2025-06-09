@@ -20,12 +20,12 @@ export default function LaCasitaHome() {
         username: email,
         password: password,
       },
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    );
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
 
       if (response.data.token) {
         setIsAuth(true);
