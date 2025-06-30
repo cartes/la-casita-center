@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
-export default function LaCasitaHeader() {
+export default function LaCasitaHeader({ onMenuPress }: { onMenuPress: () => void }) {
     const router = useRouter();
     const userImg = null;
 
     return (
         <View style={styles.header}>
-            <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Abrir menú')}>
+            <TouchableOpacity style={styles.iconButton} onPress={onMenuPress}>
                 <Ionicons name="menu" size={28} color="#333" />
             </TouchableOpacity>
             <Image source={require("../assets/images/logo_casita.png")} style={styles.logo} />
